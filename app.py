@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 import os
+from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for cross-origin requests
@@ -72,7 +73,8 @@ def manage_bookmarks():
 def manage_history():
     if request.method == 'POST':
         data = request.json
-        new_history = History(user_id=data['user_id'], url=data['url'], timestamp=data['timestamp'])
+        timestamp = datetime.strptime(data['timestamp'], '%Y-%m-%dT%H:%M:%S')  # Convert timestamp string to datetime object
+        new_history = History(user_id=data['user_id'], url=data['url'], timestamp=timestamp)
         db.session.add(new_history)
         db.session.commit()
         return jsonify({'message': 'History added successfully'})
@@ -80,5 +82,6 @@ def manage_history():
     return jsonify([{'id': h.id, 'url': h.url, 'timestamp': h.timestamp} for h in history])
 
 if __name__ == '__main__':
-    db.create_all()
+    with app.app_context():
+        db.create_all()  # Create database tables
     app.run(debug=True)
