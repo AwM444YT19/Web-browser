@@ -2,14 +2,13 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
-import os
 from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for cross-origin requests
 
 # Database configuration (using PostgreSQL)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///browser.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///browser.db'  # Use a local SQLite database
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -84,4 +83,4 @@ def manage_history():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()  # Create database tables
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)  # Run on port 5000
