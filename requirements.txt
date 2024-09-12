@@ -1,8 +1,8 @@
 Flask==2.2.5
 Flask-SQLAlchemy==3.0.5
-Flask-Cors==3.1.0
+Flask-Cors==3.0.10  # Correct version for Flask-Cors
 Werkzeug==2.3.7
-psycopg2-binary==2.9.7  # For PostgreSQL database connection
-Flask-Login==0.6.3  # For handling user authentication
-Flask-Migrate==4.0.5  # For handling database migrations
-Flask-WTF==1.1.1  # For handling form validations
+psycopg2-binary==2.9.7
+Flask-Login==0.6.3
+Flask-Migrate==4.0.5
+Flask-WTF==1.1.1
